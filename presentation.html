@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+	<head>
+
+		<meta charset="utf8">
+		<meta name="keywords" content="Anweddol, Virtualization, Python, Open-source">
+		<meta name="description" content="The Anweddol project's official website">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" href="imgs/icons/icon.png">
+
+		<title>Presentation // The Anweddol project</title>
+
+	</head>
+
+	<body>
+		
+		<header>
+			<img class="header-logo" src="imgs/logo.png" alt="The Anweddol project logo"></img>
+			<h1>The Anweddol project</h1>
+		</header>
+
+		<nav>
+			<ul class="navbar-list">
+				<li class="navbar-list-item"> <a href="index.html">Home</a> </li>
+				<li class="navbar-list-item"> <a id="active" href="presentation.html">Presentation</a> </li>
+				<li class="navbar-list-item"> <a href="contact.html">Contact</a> </li>
+			</ul>
+		</nav>
+
+		<div class="separator"></div>
+
+		<main>
+
+			<section>
+				
+				<h1>>_ Presentation</h1>
+
+				<p>The Anweddol project can be defined as a server system running temporary virtual machines that can be remotely controlled by a client, and destroyed once used. </br></br>It’s usefulness comes when someone wants to use a fully functional computer while being exposed to less dangers, like surveillance, tracking, potentially malicious surfing/software usage, or simply for having another machine at disposal for miscellaneous operations.</p>
+
+			</section>
+
+			<section>
+				
+				<h1>>_ How it works</h1>
+
+				<p>In a global scale, the interactions scheme between the client and the server is quite simple : </br></br>As you can see on the first scheme below, the client will first initiate a session with the server.</br>
+				The server will create a new temporary virtual machine that the client will be able to control.</br> It can now access to the service through it, and all the server's output requests are sent through the tor network to also preserve the server’s anonymity in the process.</p>
+
+				<img class="section-scheme-img" src="imgs/scheme1.png"></img>
+
+				<p>Once that the Client is done with, it will send a signal to the server asking him to destruct the temporary virtual machine, and close the session (scheme below).</p>
+
+				<img class="section-scheme-img" src="imgs/scheme2.png"></img>
+
+			</section>
+
+			<section>
+				
+				<h1>>_ Suggestions / Questions / Ideas</h1>
+
+				<p>If you have any ideas, comments or even questions about the project, you can express them on the dedicated <a class="section-text-anchor" href="https://github.com/the-anweddol-project/Anweddol/issues" target="_blank" rel="noopener noreferrer">issues page</a> on the github repository.</p>
+
+			</section>
+
+		</main>
+
+		<footer>
+			<figure class="footer-figure">
+				<a href="https://www.python.org/"> <img class="footer-img-python" src="imgs/footer/python-powered.png"> </a>
+				<a href="https://libvirt.org/"> <img class="footer-img-libvirt" src="imgs/footer/libvirt.png"> </a>
+				<a href="https://www.torproject.org/"> <img class="footer-img-tor" src="imgs/footer/tor.jpg"> </a>
+			</figure>
+		</footer>
+
+	</body>
+
+</html>
