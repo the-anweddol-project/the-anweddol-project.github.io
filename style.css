@@ -136,29 +136,12 @@ footer {
 	width: 800px;
 }
 
-#window-popup {
-	position: absolute;
-	width: 300px;
-	height: 180px;
-	top: 200px;
-	left: 40px;
-}
-
-@media (max-width: 1900px) {
-	#window-popup {
-		position: inherit;
-		width: 60%;
-		height: 170px;
-	}
-}
-
 @media (max-width: 1380px){
 	.window-content pre { display: none; }
 }
 
 @media (max-width: 1200px){
 	.window { width: 90%; }
-	#window-popup { width: 90%; }
 }
 
 @media (max-width: 685px){
