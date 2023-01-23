@@ -27,7 +27,6 @@ header {
 }
 
 header img {
-	width: 90px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -63,14 +62,15 @@ main {
 
 .window h2 {
 	position: relative;
-	top: -45px;
-	left: 80px;
+	top: -40px;
+	left: 70px;
 	text-align: left;
 }
 
 #intro h2 {
 	position: initial;
 	padding-bottom: 20px;
+	font-size: 25px;
 }
 
 .window ul {
@@ -81,8 +81,6 @@ main {
 }
 
 .window img {
-	width: 60px;
-	height: 60px;
 	padding-left: 2px;
 	filter: invert(100%);
 }
