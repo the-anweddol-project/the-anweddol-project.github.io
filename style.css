@@ -1,119 +1,216 @@
-* {
-	margin: 0;
-	padding: 0;
-}
-
 ::selection {
 	background-color: #fff;
 	color: #000;
 }
 
+* {
+	margin: 0;
+	padding: 0;
+}
+
 body {
+	background-image: url("imgs/grid.png");
+	font-family: "Liberation Mono";
 	background-color: #000;
-	font-family: monospace;
-	text-rendering: optimizeLegibility;
 	color: #fff;
-	font-size: 13px;
+	display: flex;
+	flex-direction: column;
 }
 
 header {
-	width: 100%;
-	height: 94px;
-	position: fixed;
-	top: 0;
-	border-bottom: 2px solid #fff;
-	background-color: #000;
-	z-index: 2;
-}
-
-header img {
 	display: block;
+	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
+	padding: 20px 50px 20px 50px;
+	text-align: center;
+	background-color: #000;
+}
+
+header section {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+header section img {
+	display: flex;
+	padding-bottom: 20px;
+}
+
+header section h1 {
+	color: #fff;
+	font-size: 25px;
+}
+
+nav {
+	display: block;
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px 50px 10px 50px;
+	background-color: #000;
+}
+
+nav ul {
+	display: flex;
+	padding-left: 200px;
+	padding-right: 200px;
+	list-style-type: none;
+	justify-content: space-around;
+	align-items: center;
+}
+
+nav ul li {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+nav ul li a {
+	display: inline-block;
+	width: 100%;
+	text-decoration: none;
+	padding: 15px 0 15px 0;
+	color: #fff;
+}
+
+nav ul li a:hover {
+	text-decoration: underline;
 }
 
 main {
 	display: block;
+	width: 70%;
+	background-color: #000;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 140px;
+	padding: 50px 50px 10px 50px;
 }
 
-.text-anchor {
-	color: #00ff10;
-	text-decoration: none;
+.article {
+	margin-bottom: 50px;
 }
 
-.text-anchor:hover { 
-	background-color: #00ff10;
-	color: #000;
+.article h2, .article details summary {
+	font-size: 20px;
+	padding-bottom: 20px;
 }
 
-.window {
-	width: 60%;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+.article p { font-size: 15px; }
+
+.article ul {
 	margin-top: 20px;
-	padding: 15px;
-	border-bottom: 1px solid #fff;
-	word-break: break-word;
-}
-
-.window h2 {
-	position: relative;
-	top: -40px;
-	left: 70px;
-	text-align: left;
-}
-
-#intro h2 {
-	position: initial;
-	padding-bottom: 20px;
-	font-size: 25px;
-}
-
-.window ul {
-	padding-left: 40px;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	list-style-type: '>_ ';
-}
-
-.window img {
-	padding-left: 2px;
-	filter: invert(100%);
-}
-
-footer {
-	display: block;
-	margin-top: 40px;
 	margin-bottom: 20px;
-	text-align: center;
-	font-size: 10px;
+	padding-left: 40px;
+	font-size: 14px;
+	list-style-type: ">_ ";
 }
 
-@media (max-width: 1560px) {
+.article ul li h3 { 
+	margin-top: 20px;
+	margin-bottom: 20px; 
+}
 
-	main { margin-top: 100px; }
+.article details summary { cursor: pointer; }
 
-	.window { width: 80%; }
+#image-gallery {
+	display: flex;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
 
-	.window ul { padding-left: 15px; }
+#image-gallery figure {
+	width: 33%;
+}
 
-	.window ul li { padding-top: 10px; }
+#image-gallery figure img {
+	width: 100%;
+}
 
-	.window img {
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
+#image-gallery figcaption {
+	padding-left: 25px;
+	font-size: 12px;
+	width: 80%;
+}
+
+#active { color: #00ff1c; }
+
+#text-anchor { 
+	text-decoration: none;
+	color: #00ff1c; 
+}
+
+#text-anchor:hover {
+	background-color: #00ff1c;
+	color: #000;
+	cursor: pointer;
+}
+
+#code-section {
+	display: block;
+	padding: 8px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: #262d35;
+	font-family: monospace;
+	font-size: 120%;
+	border-radius: 5px;
+}
+
+@media (max-width: 1550px) {
+	nav ul {
+		width: 100%;
+		padding: 0;
+	}
+}
+
+@media (max-width: 870px) {
+	nav ul {
+		flex-direction: column;
 	}
 
-	.window h2 {
-		position: initial;
-		text-align: center;
+	nav ul li {
+		line-height: 40px;
+	}
+
+	nav ul li a {
+		padding: 0;
+	}
+
+	#image-gallery {
+		flex-direction: column;
+	}
+
+	#image-gallery figure {
+		width: 100%;
+	}
+}
+
+@media (max-width: 600px) {
+	header {
+		width: 100%;
+		padding: 0;
 		padding-top: 20px;
-		padding-bottom: 20px;
 	}
 
+	nav {
+		width: 100%;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	main {
+		width: 100%;
+		padding-left: 15px;
+		padding-right: 0;
+	}
+
+	main .article{
+		width: 90%;
+	}
+
+	.article ul li {
+		margin-bottom: 10px;
+	}
 }

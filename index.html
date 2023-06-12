@@ -1,43 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-	
-	<head>
-		<meta charset="utf8">
-		<meta name="keywords" content="Anweddol, The Anweddol project, Virtualization, Python, Open-source">
-		<meta name="description" content="The Anweddol project's official website">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="style.css">
-		<link rel="icon" href="imgs/icons/icon2.png">
-		<title>The Anweddol project</title>
-	</head>
 
-	<body>
-		<header>
-			<img src="imgs/logo.png"></img>
-		</header>
-		<main>
-			<article class="window" id="intro">
-				<h2>The Anweddol Project</h2>
-           		<p>Anweddol is a server implementation providing temporary, SSH-controllable virtual machines across the web. </br>The software is still under development : this website provides quick informations about it. Please note that some of the technical specifications presented on this site now can be different, or even absent in the final version.</p>     
-			</article>
-			<article class="window" id="presentation">
-				<img src="imgs/icons/presentation.png"></img>
-				<h2>Presentation</h2>
-           		<p>It is a server system running temporary virtual machines that can be remotely controlled by a client, and destroyed once used. It’s usefulness comes when someone wants to use a fully functional computer while being exposed to less dangers, like surveillance, tracking, potentially malicious surfing/software usage, or simply for having another machine at disposal for miscellaneous operations.</p>     
-			</article>
-			<article class="window" id="contact">
-				<img src="imgs/icons/contact.png"></img>
-				<h2>Contact</h2>
-           		<p>You can contact the Anweddol developper by several ways :</p>
-				<ul>
-					<li><a class="text-anchor" href="contact/A050C2B36F2E80BE6FDE6E0F0D3F21975020EFC0.asc">[PGP key]</a> the-anweddol-project@proton.me</li>
-					<li><a class="text-anchor" href="https://github.com/Darnethal0z" target="_blank" rel="noopener noreferrer">[Developper github page]</a></li>
-				</ul>
-			</article>
-		</main>
-		<footer>
-			<p>This website is made with pure HTML / CSS to ensure its integrity and performance.</br></br>Website source code <a class="text-anchor" href="https://github.com/the-anweddol-project/the-anweddol-project.github.io" target="_blank" rel="noopener noreferrer">[here]</a></p>
-		</footer>
-	</body>
+<!-- https://www.svgrepo.com/collection/calcite-sharp-line-icons/ -->
+
+<head>
+
+    <meta charset="utf8">
+    <meta name="keywords" content="Anweddol, The Anweddol project, Virtualization, Python, Open-source">
+    <meta name="description" content="The Anweddol project's official website">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="imgs/icons/icon2.png">
+
+    <title>Home - The Anweddol project</title>
+
+</head>
+
+<body>
+
+    <header>
+        <section>
+            <img src="imgs/logo.png" alt="The anweddol logo">
+            <h1>The Anweddol project</h1>
+        </section>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a id="active" href="index.html">Home</a></li>
+            <li><a href="documentation.html">Documentation</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="contribute.html">Bugs & Contribute</a></li>
+            <li><a href="social.html">Social</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <article class="article" id="presentation">
+            <h2>// On-demand temporary virtual machines</h2>
+            <p>Anweddol is a client/server system providing temporary, SSH-controllable virtual machines to enhance anonymity online.</br>
+                </br>It’s usefulness comes when someone wants to use a fully functional computer while being exposed to less dangers by using it remotely on a dedicated server, and by destroying it after use.</br>
+                </br>Here is a 3-steps scenario representing a typical usage of the Anweddol system : </p>
+            <section id="image-gallery">
+                <figure>
+                    <img src="imgs/schemas/schema1.png" alt="Anweddol usage schema 1">
+                    <figcaption>The client will first send a request to the server asking it to create a new virtual machine.</figcaption>
+                </figure>
+                <figure>
+                    <img src="imgs/schemas/schema2.png" alt="Anweddol usage schema 2">
+                    <figcaption>The server will respond with the SSH coordinates of the created virtual machine to the client so that it can interact with it securely.</figcaption>
+                </figure>
+                <figure>
+                    <img src="imgs/schemas/schema3.png" alt="Anweddol usage schema 3">
+                    <figcaption>Once the client has finished using the virtual machine, it will send a request to the server to destroy it.</figcaption>
+                </figure>
+            </section>
+        </article>
+
+        <article class="article" id="contribute">
+            <h2>// Open-source and community-driven software</h2>
+            <p>Written in Python, the software has been designed to be versatile and flexible.</br>You can make a completely new client or server implementation from scratch, integrate it into on an existing project, customize your own application ... the choice is yours.</br>
+                </br> Retrieve the full source code on <a id="text-anchor" href="https://github.com/the-anweddol-project" target="_blank" rel="noopener noreferrer">[Github]</a>.</br>
+                </br>Above all, Anweddol is a project that belongs to its community : Everyone can bring new ideas, enhancement, report malfunctions or anything that can improve the software. If you want to be part of it, there is many ways you can contribute to the project :</br> See the <a id="text-anchor" href="contribute.html">[Contribution section]</a> to learn more.</p>
+        </article>
+
+        <article class="article" id="contribute">
+            <h2>// Getting started</h2>
+            <p>Anweddol is actually separated in 3 programs :</p>
+
+            <ul>
+                <li>The client implementation : It is the software that clients use to interact with Anweddol servers.</li>
+                <li>The server implementation : It is the actual server software providing the temporary virtual machines to the clients.</li>
+            </ul>
+
+            </p>For a proper introduction on how Anweddol is made, see the <a id="text-anchor" href="documentation.html">[Documentation section]</a> to learn more. </br></br>Retrieve these implementations source code on their respective Github repositories : </p>
+
+            <ul>
+                <li><a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://github.com/the-anweddol-project/Anweddol-client">[Anweddol client implementation repository]</a></li>
+                <!--lien vers The anweddol client-->
+                <li><a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://github.com/the-anweddol-project/Anweddol-server">[Anweddol server implementation repository]</a></li>
+                <!--lien vers The anweddol server-->
+            </ul>
+
+        </article>
+
+    </main>
+
+</body>
 
 </html>
