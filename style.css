@@ -296,12 +296,6 @@ footer p {
 	}
 }
 
-@media (max-width: 800px){
-	.footer-fixed {
-		position: initial;
-	}
-}
-
 @media (max-width: 670px){
 	header {
 		position: initial;
@@ -332,15 +326,15 @@ footer p {
 		background-color: rgba(0, 0, 0, 0.7);
 	}
 
+	footer p {
+		width: 250px;
+		text-align: center;
+	}
+
 	.web-article {
 		padding-top: 10px;
 		padding-left: 10px;
 		width: 95%;
-	}
-
-	footer p {
-		width: 250px;
-		text-align: center;
 	}
 
 	.web-article table {
@@ -361,6 +355,10 @@ footer p {
 		display: block;
 		margin-left: auto;
 		margin-right: auto;
+	}
+
+	.footer-fixed {
+		position: initial;
 	}
 
 }
