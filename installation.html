@@ -1,66 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- https://www.svgrepo.com/collection/calcite-sharp-line-icons/ -->
+	<head>
 
-<head>
+		<meta charset="utf8">
+		<meta name="keywords" content="Anweddol, The Anweddol project, Virtualization, Python, Open-source">
+		<meta name="description" content="How to install each Anweddol implementations">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="robots" content="index, follow">
 
-    <meta charset="utf8">
-    <meta name="keywords" content="Anweddol, The Anweddol project, Virtualization, Python, Open-source">
-    <meta name="description" content="Anweddol is a client/server system providing temporary, SSH-controllable virtual machines to enhance anonymity online.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" href="imgs/icons/icon2.png">
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="imgs/icons/icon2.png">
+		<title>Installation // The Anweddol project</title>
 
-    <title>Installation - The Anweddol project</title>
+	</head>
 
-</head>
+	<body>
 
-<body>
+		<header>
+			<section class="logo">
+				<img src="imgs/logo.png" alt="'Anghofio', the Anweddol project logo">
+				<h1>The Anweddol Project</h1>
+			</section>
+			<nav>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="documentation.html">Documentation</a></li>
+					<li><a href="installation.html" class="active">Installation</a></li>
+					<li><a href="contribute.html">Contribute</a></li>
+					<li><a href="social.html">Social</a></li>
+				</ul>
+			</nav>
+		</header>
 
-    <header>
-        <section>
-            <img src="imgs/logo.png" alt="The anweddol logo">
-            <h1>The Anweddol project</h1>
-        </section>
-    </header>
+		<main>
 
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="documentation.html">Documentation</a></li>
-            <li><a id="active" href="installation.html">Installation</a></li>
-            <li><a href="contribute.html">Bugs & Contribute</a></li>
-            <li><a href="social.html">Social</a></li>
-        </ul>
-    </nav>
+			<article class="web-article">
+				<h2>Installation</h2>
+				<p>This section is dedicated to the Anweddol implementation installation. See the articles below to know how to install them on your system.</p>
+			</article>
 
-    <main>
-        <article class="article">
-            <h2>// Installation</h2>
-            <p>This section is dedicated to the Anweddol implementation installation. See the articles below to know how to install them on your system.</p>
+			<article class="web-article">
+	            <h2>Client implementation</h2>
+	            <p>To install the client, clone the repository and install it from sources : </p>
+	            <code class="code-section">$ git clone https://github.com/the-anweddol-project/Anweddol-client.git</br>$ cd Anweddol-client</br>$ pip install .</code>
 
-        </article>
+	            <p>Read the <a class="link-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-client.readthedocs.io/en/latest/usage_guide/index.html">[Usage guide]</a> to get a proper introduction, you can also see the <a class="link-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-client.readthedocs.io/en/latest/developer_section/index.html">[Client developer section]</a> about Anweddol client API bindings.</p>
+	        </article>
 
-        <article class="article" id="client">
-            <h2>// Client implementation</h2>
-            <p>To install the client, clone the repository and install it from sources : </p>
-            <code id="code-section">$ git clone https://github.com/the-anweddol-project/Anweddol-client.git</br>$ cd Anweddol-client</br>$ pip install .</code>
+	        <article class="web-article">
+	            <h2>Server implementation</h2>
+	            <p>The Anweddol server installation requires a specific setup before installation and usage in order to provide a functional service.</br></br>See the server <a class="link-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-server.readthedocs.io/en/latest/administration_guide/index.html">[Administration guide]</a> to learn more.</p>
+	        </article>
 
-            <p>Read the <a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-client.readthedocs.io/en/latest/usage_guide/index.html">[Usage guide]</a> to get a proper introduction to Anweddol.</br>
-                </br>You can also see the <a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-client.readthedocs.io/en/latest/developer_section/index.html">[Client developer section]</a> about Anweddol client API bindings.</p>
+		</main>
 
-        </article>
+		<footer class="footer-fixed">
+			<p>Copyright 2023 The Anweddol project - Website source code <a class="link-anchor" target="_blank" rel="noopener noreferrer" href="https://github.com/the-anweddol-project/the-anweddol-project.github.io">[here]</a></p>
+		</footer>
 
-        <article class="article" id="server">
-            <h2>// Server implementation</h2>
-            <p>The Anweddol server installation requires a specific setup before installation and usage in order to provide a functional service.</br></br>See the server <a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-server.readthedocs.io/en/latest/administration_guide/index.html">[Administration guide]</a> to learn more.</p>
-
-        </article>
-
-    </main>
-
-</body>
+	</body>
 
 </html>

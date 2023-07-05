@@ -1,79 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- https://www.svgrepo.com/collection/calcite-sharp-line-icons/ -->
+	<head>
 
-<head>
+		<meta charset="utf8">
+		<meta name="keywords" content="Anweddol, The Anweddol project, Virtualization, Python, Open-source">
+		<meta name="description" content="The Anweddol project documentation">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="robots" content="index, follow">
 
-    <meta charset="utf8">
-    <meta name="keywords" content="Anweddol, The Anweddol project, Virtualization, Python, Open-source">
-    <meta name="description" content="Anweddol is a client/server system providing temporary, SSH-controllable virtual machines to enhance anonymity online.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" href="imgs/icons/icon2.png">
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="imgs/icons/icon2.png">
+		<title>Documentation // The Anweddol project</title>
 
-    <title>Documentation - The Anweddol project</title>
+	</head>
 
-</head>
+	<body>
 
-<body>
+		<header>
+			<section class="logo">
+				<img src="imgs/logo.png" alt="'Anghofio', the Anweddol project logo">
+				<h1>The Anweddol Project</h1>
+			</section>
+			<nav>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="documentation.html" class="active">Documentation</a></li>
+					<li><a href="installation.html">Installation</a></li>
+					<li><a href="contribute.html">Contribute</a></li>
+					<li><a href="social.html">Social</a></li>
+				</ul>
+			</nav>
+		</header>
 
-    <header>
-        <section>
-            <img src="imgs/logo.png" alt="The anweddol logo">
-            <h1>The Anweddol project</h1>
-        </section>
-    </header>
+		<main>
 
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a id="active" href="documentation.html">Documentation</a></li>
-            <li><a href="installation.html">Installation</a></li>
-            <li><a href="contribute.html">Bugs & Contribute</a></li>
-            <li><a href="social.html">Social</a></li>
-        </ul>
-    </nav>
+			<article class="web-article">
+				<h2>Documentation</h2>
+				<p>All of the technical aspects of Anweddol are documented on the corresponding implementations readthedocs pages, and for every field of use.</br></br>On this page you will retrieve all the links and references to the documentation for each implementation, if you have any questions or comments concerning the documentation, open an issue on the affiliated repository or post it on the project <a class="link-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol.zulipchat.com/">[Zulip organization]</a>.</p>
+			</article>
 
-    <main>
+			<article class="web-article">
+				<h2>Note on implementation installation</h2>
+				<p>When an implementation is installed, there is actually 2 distinct elements installed :</p>
+				<ul>
+					<li>The python package ;</li>
+					<li>The built-in CLI software ;</li>
+				</ul>
+				<p>The python package contains all the basic features and tools that an Anweddol implementation must have to be functional: it can be used by developers to create their own Anweddol-related software.</br></br>The integrated CLI software is the ready-to-use CLI based on the current python package. It allows users to benefit directly from the implementation without having to code their own software. Note that it is dependant of the python package itself, which is why it is integrated.</p>
+			</article>
 
-        <article class="article" id="documentation">
-            <h2>// Documentation</h2>
-            <p>All of the technical aspects of Anweddol are documented on the corresponding implementations readthedocs pages, and for every field of use.</br>If you have any questions or comments concerning the documentation, open an issue on the affiliated repository issue page or post it on the project <a id="text-anchor" href="https://anweddol.zulipchat.com/#narrow/stream/391698-questions" target="_blank" rel="noopener noreferrer">[Zulip chat]</a>.</p>
+			<article class="web-article">
+				<h2>Client implementation</h2>
+				<section class="link-anchor-button-row">
+					<a class="link-anchor-button" target="_blank" rel="noopener noreferrer" href="https://anweddol-client.readthedocs.io/en/latest/usage_guide/index.html">Usage guide</a>
+					<a class="link-anchor-button" target="_blank" rel="noopener noreferrer" href="https://anweddol-client.readthedocs.io/en/latest/technical_specifications/index.html">Technical specifications</a>
+					<a class="link-anchor-button" target="_blank" rel="noopener noreferrer" href="https://anweddol-client.readthedocs.io/en/latest/developer_section/index.html">Developer section</a>
+				</section>
+			</article>
 
-        </article>
+			<article class="web-article">
+				<h2>Server implementation</h2>
+				<section class="link-anchor-button-row">
+					<a class="link-anchor-button" target="_blank" rel="noopener noreferrer" href="https://anweddol-server.readthedocs.io/en/latest/administration_guide/index.html">Administration guide</a>
+					<a class="link-anchor-button" target="_blank" rel="noopener noreferrer" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/index.html">Technical specifications</a>
+					<a class="link-anchor-button" target="_blank" rel="noopener noreferrer" href="https://anweddol-server.readthedocs.io/en/latest/developer_section/index.html">Developer section</a>
+				</section>
+			</article>
 
-        <article class="article" id="client-documentation">
-            <h2>// Client documentation</h2>
-            <ul>
-                <li><a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-client.readthedocs.io/en/latest/usage_guide/index.html#">[Usage guide]</a></li>
-                <!--lien vers The anweddol client-->
-                <li><a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-client.readthedocs.io/en/latest/technical_specifications/index.html">[Technical specifications]</a></li>
-                <!--lien vers The anweddol server-->
-                <li><a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-client.readthedocs.io/en/latest/developer_section/index.html">[Client developer section]</a></li>
-            </ul>
+			<article class="web-article">
+				<h2>ISO factory</h2>
+				<p>The Anweddol ISO factory is a BASH script that creates up-to-date, functional debian images for use by Anweddol servers as container OSes. Although there is no documentation of its own, there are instructions for use in the README file of the :</p>
+				<a class="link-anchor-button" target="_blank" rel="noopener noreferrer" href="https://github.com/the-anweddol-project/Anweddol-ISO-factory#anweddol-container-iso-factory">ISO Factory repository</a>
+			</article>
 
-            <p>See the client implementation <a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://github.com/the-anweddol-project/Anweddol-client">[source code repository]</a>.</p>
+		</main>
 
-        </article>
+		<footer>
+			<p>Copyright 2023 The Anweddol project - Website source code <a class="link-anchor" target="_blank" rel="noopener noreferrer" href="https://github.com/the-anweddol-project/the-anweddol-project.github.io">[here]</a></p>
+		</footer>
 
-        <article class="article" id="server-documentation">
-            <h2>// Server documentation</h2>
-            <ul>
-                <li><a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-server.readthedocs.io/en/latest/administration_guide/index.html">[Administration guide]</a></li>
-                <!--lien vers The anweddol client-->
-                <li><a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/index.html">[Technical specifications]</a></li>
-                <!--lien vers The anweddol server-->
-                <li><a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://anweddol-server.readthedocs.io/en/latest/developer_section/index.html">[Server developer section]</a></li>
-            </ul>
-
-            <p>See the server implementation <a id="text-anchor" target="_blank" rel="noopener noreferrer" href="https://github.com/the-anweddol-project/Anweddol-server">[source code repository]</a>.</p>
-
-        </article>
-
-    </main>
-
-</body>
+	</body>
 
 </html>
