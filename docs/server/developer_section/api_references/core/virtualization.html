@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Virtualization &#8212; The Anweddol server beta-1.2.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../../../_static/icon2.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Access token" href="../tools/accesstk.html" />
+    <link rel="prev" title="Utilities" href="utilities.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="virtualization">
+<h1>Virtualization<a class="headerlink" href="#virtualization" title="Permalink to this heading">¶</a></h1>
+<hr class="docutils" />
+<blockquote>
+<div><p>Virtualization management and utilities, using libvirt API</p>
+</div></blockquote>
+<blockquote>
+<div><p>Package <code class="docutils literal notranslate"><span class="pre">anwdlserver.core.virtualization</span></code></p>
+</div></blockquote>
+<section id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this heading">¶</a></h2>
+<p>Default parameters :</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_LIBVIRT_DRIVER_URI</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;qemu:///system&quot;</span></code></p></td>
+<td><p>The default server bind address</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_CONTAINER_ENDPOINT_USERNAME</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;endpoint&quot;</span></code></p></td>
+<td><p>The default server listen port</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_CONTAINER_ENDPOINT_PASSWORD</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;endpoint&quot;</span></code></p></td>
+<td><p>The default timeout applied on a new client</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_CONTAINER_ENDPOINT_LISTEN_PORT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">22</span></code></p></td>
+<td><p>Start the server asynchronously by default</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_BRIDGE_INTERFACE_NAME</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;anwdlbr0&quot;</span></code></p></td>
+<td><p>The default bridge interface name that container domains will use</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_NAT_INTERFACE_NAME</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;virbr0&quot;</span></code></p></td>
+<td><p>The default NAT interface name that container domains will use</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_CONTAINER_MAX_TRYOUT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">20</span></code></p></td>
+<td><p>The maximum attemps to check the network availability of a container domain before error</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_MAX_ALLOWED_CONTAINERS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">6</span></code></p></td>
+<td><p>The maximum allowed amount of active containers on an instance</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_CONTAINER_MEMORY</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2048</span></code></p></td>
+<td><p>The memory, in Mb, allocated to container domains</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_CONTAINER_VCPUS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td><p>The amount of VCPUs allocated to container domains</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_CONTAINER_PORT_RANGE</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">range(10000,</span> <span class="pre">15000)</span></code></p></td>
+<td><p>The port range that will be assigned to container domains SSH servers</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_CONTAINER_WAIT_AVAILABLE</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p>Wait for the network to be available on a container domain before continuing by default</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_CONTAINER_DESTROY_DOMAIN</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p>Destroy the domain rather than shutting it down by default</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DEFAULT_STORE_CONTAINER</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p>Store the container instance on the virtualization interface or not by default</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">¶</a></h2>
+<section id="endpointshellinstance">
+<h3><code class="docutils literal notranslate"><span class="pre">EndpointShellInstance</span></code><a class="headerlink" href="#endpointshellinstance" title="Permalink to this heading">¶</a></h3>
+<section id="definition">
+<h4>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EndpointShellInstance</span><span class="p">(</span>
+	<span class="n">ssh_client</span><span class="p">:</span> <span class="n">paramiko</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">SSHClient</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Represents a opened SSH shell to a container endpoint</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ssh_client</span></code>: The <a class="reference external" href="https://docs.paramiko.org/en/stable/api/client.html"><code class="docutils literal notranslate"><span class="pre">paramiko.client.SSHClient</span></code></a> instance representing the SSH connection.</p></li>
+</ul>
+<p><strong>NOTE</strong> : The endpoint SSH shell will be automatically closed on <code class="docutils literal notranslate"><span class="pre">__del__</span></code> method.</p>
+</section>
+<section id="methods">
+<h4>Methods<a class="headerlink" href="#methods" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">isClosed</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Check if the connection is closed</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>A boolean value. <code class="docutils literal notranslate"><span class="pre">True</span></code> if the connection is closed, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getSSHClient</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">paramiko</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">SSHClient</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the <a class="reference external" href="https://docs.paramiko.org/en/stable/api/client.html"><code class="docutils literal notranslate"><span class="pre">paramiko.client.SSHClient</span></code></a> connection object</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://docs.paramiko.org/en/stable/api/client.html"><code class="docutils literal notranslate"><span class="pre">paramiko.client.SSHClient</span></code></a> object of the instance</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getStoredContainerSSHCredentials</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the stored container SSH credentials</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>A tuple representing the stored container SSH credentials :</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+	<span class="n">username</span><span class="p">,</span>
+	<span class="n">password</span><span class="p">,</span>
+	<span class="n">listen_port</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">username</span></code> : The SSH username</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">password</span></code> : The SSH password</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">listen_port</span></code> : The SSH server listen port</p></li>
+</ul>
+<p><strong>NOTE</strong> : Container SSH credentials are stored on the instance within the <code class="docutils literal notranslate"><span class="pre">setContainerSSHCredentials</span></code> method. For these credentials to be sent to the client in the server process, you need to call this method if you want to set specific credentials.</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">executeCommand</span><span class="p">(</span><span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Execute a command on the remote container</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">command</span></code> : The command to execute</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>A tuple representing the stdout and the stderr of the command output :</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+	<span class="n">stdout</span><span class="p">,</span>
+	<span class="n">stderr</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">stdout</span></code> : The standard output stream of the result</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stderr</span></code> : The standard error stream of the result</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">generateContainerSSHCredentials</span><span class="p">(</span>
+	<span class="n">port_range</span><span class="p">:</span> <span class="nb">range</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_PORT_RANGE</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Generate new container SSH credentials</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">port_range</span></code> : The port range which a random new listen port is chosen</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>A tuple representing the generated container SSH credentials :</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+	<span class="n">username</span><span class="p">,</span>
+	<span class="n">password</span><span class="p">,</span>
+	<span class="n">listen_port</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">username</span></code> : The SSH username</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">password</span></code> : The SSH password</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">listen_port</span></code> : The SSH server listen port</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setContainerSSHCredentials</span><span class="p">(</span>
+	<span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">listen_port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Set the container SSH credentials on the remote container</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">username</span></code> : The SSH username to set</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">password</span></code> : The SSH password to set</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">listen_port</span></code> : The SSH server listen port to set</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><strong>NOTE</strong> : This method uses the <code class="docutils literal notranslate"><span class="pre">anweddol_container_setup.sh</span></code> script on the container to set the SSH credentials on ot, thus calling the <code class="docutils literal notranslate"><span class="pre">closeShell</span></code> method after completion (see the technical specifications <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/virtualization.html#administration">Virtualization section</a>) to learn more).</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">closeShell</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Close the SSH connection</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><strong>NOTE</strong> : This method is automatically called within the <code class="docutils literal notranslate"><span class="pre">__del__</span></code> method and the <code class="docutils literal notranslate"><span class="pre">setContainerSSHCredentials</span></code> method when called, but it is programatically better to call it naturally</p>
+</section>
+</section>
+<section id="containerinstance">
+<h3><code class="docutils literal notranslate"><span class="pre">ContainerInstance</span></code><a class="headerlink" href="#containerinstance" title="Permalink to this heading">¶</a></h3>
+<section id="id1">
+<h4>Definition<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ContainerInstance</span><span class="p">(</span>
+	<span class="n">uuid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+	<span class="n">iso_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+	<span class="n">memory</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_MEMORY</span><span class="p">,</span>
+	<span class="n">vcpus</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_VCPUS</span><span class="p">,</span>
+	<span class="n">nat_interface_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_NAT_INTERFACE_NAME</span><span class="p">,</span>
+	<span class="n">bridge_interface_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_BRIDGE_INTERFACE_NAME</span><span class="p">,</span>
+	<span class="n">endpoint_username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_ENDPOINT_USERNAME</span><span class="p">,</span>
+	<span class="n">endpoint_password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_ENDPOINT_PASSWORD</span><span class="p">,</span>
+	<span class="n">endpoint_listen_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_ENDPOINT_LISTEN_PORT</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Represents a container instance</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uuid</span></code> : The new <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/client_authentication.html#session-credentials">container UUID</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iso_path</span></code> : The ISO path that will be used for the container domain</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory</span></code> : The memory amount to allocate on the container, exprimed in Mb</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vcpus</span></code> : The VCPUs amount to allocate on the container</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nat_interface_name</span></code> : The <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/networking.html#container">NAT interface name</a> that will be used by the container</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bridge_interface_name</span></code> : <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/networking.html#container">The bridge interface</a> name that will be used by the container</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">endpoint_username</span></code> : The <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/virtualization.html#administration">endpoint username</a> that will be used for container administration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">endpoint_password</span></code> : The <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/virtualization.html#administration">endpoint password</a> that will be used for container administration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">endpoint_listen_port</span></code> : The <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/virtualization.html#administration">endpoint listen port</a> that will be used for container administration</p></li>
+</ul>
+</section>
+<section id="id2">
+<h4>Methods<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">isDomainRunning</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Check if the container domain is running</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>A boolean value. <code class="docutils literal notranslate"><span class="pre">True</span></code> if the domain is running, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getNATInterfaceName</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the NAT interface name of the instance</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The NAT interface name of the instance</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getBridgeInterfaceName</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the bridge interface name of the instance</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The bridge interface name of the instance</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getDomainDescriptor</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">libvirt</span><span class="o">.</span><span class="n">virDomain</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the <code class="docutils literal notranslate"><span class="pre">libvirt.virDomain</span></code> object of the instance</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">libvirt.virDomain</span></code> object of the instance, or <code class="docutils literal notranslate"><span class="pre">None</span></code> is unavailable</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getUUID</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the instance <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/client_authentication.html#session-credentials">container UUID</a></p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/client_authentication.html#session-credentials">container UUID</a> of the instance</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getISOPath</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the instance ISO path</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The instance ISO path on local storage</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getMAC</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the container MAC address</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The instance container MAC address</p></li>
+</ul>
+<p><em>Possible raise classes</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code></p></li>
+</ul>
+<p><strong>NOTE</strong> : The container domain must be started and ready in order to get its MAC address.</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getIP</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the container IP address</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The instance container IP address, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the domain is not started or not ready yet</p></li>
+</ul>
+<p><em>Possible raise classes</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code></p></li>
+</ul>
+<p><strong>NOTE</strong> : The container domain must be started and ready in order to get its IP, since the method will fetch it from the dnsmasq interface status file located in <code class="docutils literal notranslate"><span class="pre">/var/lib/libvirt/dnsmasq/</span></code> with its MAC address.</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getMemory</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the allocated container memory amount</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The memory amount allocated to the container</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getVCPUs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the allocated container Virtual CPUs amount</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The VCPUs amount allocated to the container</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setDomainDescriptor</span><span class="p">(</span><span class="n">domain_descriptor</span><span class="p">:</span> <span class="n">libvirt</span><span class="o">.</span><span class="n">virDomain</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Set the <code class="docutils literal notranslate"><span class="pre">libvirt.virDomain</span></code> object of the instance</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">domain_descriptor</span></code> : The <code class="docutils literal notranslate"><span class="pre">libvirt.virDomain</span></code> object to set on the instance</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setISOPath</span><span class="p">(</span><span class="n">iso_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Set the container ISO path of the instance</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">iso_path</span></code> : The ISO path to set on the instance</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setMemory</span><span class="p">(</span><span class="n">memory</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Set the memory amount to allocate on the container</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">memory</span></code> : The memory to allocate on the container, exprimed in Mb</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><strong>NOTE</strong> : The parameter <code class="docutils literal notranslate"><span class="pre">memory</span></code> must be a value greater than 0</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setVCPUs</span><span class="p">(</span><span class="n">vcpus</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Set the Virtual CPUs amount to allocate on the container</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vcpus</span></code> : The amount of VCPUs to allocate on the container</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><strong>NOTE</strong> : The parameter <code class="docutils literal notranslate"><span class="pre">vcpus</span></code> must be a value greater than 0</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setNATInterfaceName</span><span class="p">(</span><span class="n">nat_interface_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Set the NAT interface name of the container</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nat_interface_name</span></code> : The NAT interface name that will be used on the container domain</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setBridgeInterfaceName</span><span class="p">(</span><span class="n">bridge_interface_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Set the bridge interface name of the container</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bridge_interface_name</span></code> : The bridge interface name that will be used on the container domain</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setEndpointSSHAuthenticationCredentials</span><span class="p">(</span>
+	<span class="n">endpoint_username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_ENDPOINT_USERNAME</span><span class="p">,</span> 
+    <span class="n">endpoint_password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_ENDPOINT_PASSWORD</span><span class="p">,</span> 
+    <span class="n">endpoint_listen_port</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_ENDPOINT_LISTEN_PORT</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Set the container <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/virtualization.html#administration">endpoint SSH credentials</a> for SSH authentication</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">endpoint_username</span></code> : The endpoint username to set</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">endpoint_password</span></code> : The endpoint password to set</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">endpoint_listen_port</span></code> : The endpoint listen port to set</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">makeISOChecksum</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the SHA256 digest of the instance container ISO</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The SHA256 digest of the container ISO</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">createEndpointShell</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EndpointShellInstance</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Create a <code class="docutils literal notranslate"><span class="pre">EndpointShellInstance</span></code> object on the running container</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">EndpointShellInstance</span></code> object representing the SSH shell on the container domain endpoint</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">startDomain</span><span class="p">(</span>
+	<span class="n">wait_available</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_WAIT_AVAILABLE</span><span class="p">,</span>
+    <span class="n">wait_max_tryout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_MAX_TRYOUT</span><span class="p">,</span>
+    <span class="n">driver_uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_LIBVIRT_DRIVER_URI</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Start the <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/virtualization.html#api">container domain</a></p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">wait_available</span></code> : Wait for the network to be available on the domain or not</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wait_max_tryout</span></code> : The amount of attemps to check if the network is available on the domain before raising <code class="docutils literal notranslate"><span class="pre">TimeoutError</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">driver_uri</span></code> : The hypervisor <a class="reference external" href="https://libvirt.org/uri.html">driver URI</a> to use.</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Possible raise classes</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TimeoutError</span></code></p></li>
+</ul>
+<p><strong>NOTE</strong> : By default, the qemu hypervisor URI <code class="docutils literal notranslate"><span class="pre">qemu:///system</span></code> is used. The container domain must be stopped before being started.</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stopDomain</span><span class="p">(</span><span class="n">destroy</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DEFAULT_CONTAINER_DESTROY_DOMAIN</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Stop the container domain</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">destroy</span></code> : Destroy the container domain rather than shutting it down or not</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Possible raise classes</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code></p></li>
+</ul>
+<p><strong>NOTE</strong> : The container domain must be running before being stopped.</p>
+</section>
+</section>
+<section id="virtualizationinterface">
+<h3><code class="docutils literal notranslate"><span class="pre">VirtualizationInterface</span></code><a class="headerlink" href="#virtualizationinterface" title="Permalink to this heading">¶</a></h3>
+<section id="id3">
+<h4>Definition<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">VirtualizationInterface</span><span class="p">(</span>
+	<span class="n">container_iso_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">max_allowed_containers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_MAX_ALLOWED_CONTAINERS</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Provides container management functionality</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">container_iso_path</span></code> : The container ISO path to set on created containers</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_allowed_containers</span></code> : The maximum allowed active containers amount on the instance, must be greater than 0</p></li>
+</ul>
+</section>
+<section id="id4">
+<h4>Methods<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getIsoPath</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the instance ISO path</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The instance ISO path</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getMaxAllowedContainersAmount</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the maximum allowed active containers amount on the instance</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The maximum allowed active containers amount on the instance, is greater than 0</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getContainersAmount</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the active containers amount on the instance</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The amount of active containers on the instance</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getAvailableContainersAmount</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get the amount of available containers left</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The amount of available containers left</p></li>
+</ul>
+<p><strong>NOTE</strong> : This method justs substract the maximum allowed active containers amount on the instance with the actual active containers amount.</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">listStoredContainers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>List stored containers</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>A list enumerating the stored container UUIDs</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getStoredContainer</span><span class="p">(</span><span class="n">container_uuid</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">ContainerInstance</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Get a stored container</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">container_uuid</span></code> : The container UUID to search for</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ContainerInstance</span></code> object of the crated container if exists, <code class="docutils literal notranslate"><span class="pre">None</span></code> otherwise</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setIsoPath</span><span class="p">(</span><span class="n">iso_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Set the instance ISO path</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">iso_path</span></code> : The instance ISO path to set. Must point to a valid ISO image</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setMaxAllowedContainers</span><span class="p">(</span><span class="n">max_allowed_containers</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Set the maximum allowed active container amount on the instance</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">max_allowed_containers</span></code> : The maximum allowed active containers amount on the instance, must be greater than 0</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">addStoredContainer</span><span class="p">(</span><span class="n">container_instance</span><span class="p">:</span> <span class="n">ContainerInstance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Add a container on the instance</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">container_instance</span></code> : The <code class="docutils literal notranslate"><span class="pre">ContainerInstance</span></code> object to add</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<p><em>Possible raise classes</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code></p></li>
+</ul>
+<p><strong>NOTE</strong> : If the stored container amount become equal to the <code class="docutils literal notranslate"><span class="pre">max_allowed_containers</span></code> value from the class initialization, a <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code> will be raised.</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deleteStoredContainer</span><span class="p">(</span><span class="n">container_uuid</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Delete a stored container</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">container_instance</span></code> : The <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/core/client_authentication.html#session-credentials">container UUID</a> to delete</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>None</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">createContainer</span><span class="p">(</span><span class="n">store</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DEFAULT_STORE_CONTAINER</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ContainerInstance</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Create a container</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">store</span></code> : <code class="docutils literal notranslate"><span class="pre">True</span></code> to store the created container, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ContainerInstance</span></code> object of the created container</p></li>
+</ul>
+<p><em>Possible raise classes</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code></p></li>
+</ul>
+<p><strong>NOTE</strong> : If the stored container amount become equal to the <code class="docutils literal notranslate"><span class="pre">max_allowed_containers</span></code> value from the class initialization, a <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code> will be raised.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">The Anweddol server</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../administration_guide/index.html">Administration guide</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Developer section</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#important-note">Important note</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#examples">Examples</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#api-references">API references</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#core-features">Core features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#tools-features">Tools features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#cli-references">CLI references</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../technical_specifications/index.html">Technical specifications</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contribute</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Developer section</a><ul>
+      <li>Previous: <a href="utilities.html" title="previous chapter">Utilities</a></li>
+      <li>Next: <a href="../tools/accesstk.html" title="next chapter">Access token</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, The Anweddol project.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../../../_sources/developer_section/api_references/core/virtualization.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Virtualization &#8212; The Anweddol server beta-1.2.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../../_static/icon2.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Access token" href="../tools/access_token.html" />
+    <link rel="prev" title="Networking" href="networking.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="virtualization">
+<h1>Virtualization<a class="headerlink" href="#virtualization" title="Permalink to this heading">¶</a></h1>
+<hr class="docutils" />
+<section id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h2>
+<p>The Anweddol server uses the Libvirt API to manage containers.
+You’ll retrieve the full documentation on the <a class="reference external" href="https://www.libvirt.org/docs/libvirt-appdev-guide-python/en-US/html/">libvirt python binding</a> documentation website.</p>
+<p>A <em>container</em> is a libvirt domain wrapper utility running with a live debian image (see below).</p>
+<p>The domain XML used for container domain definition is :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">domain</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;kvm&#39;</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">container_uuid</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">memory</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;MiB&#39;</span><span class="o">&gt;</span><span class="n">memory</span><span class="o">&lt;/</span><span class="n">memory</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">currentMemory</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;MiB&#39;</span><span class="o">&gt;</span><span class="n">memory</span><span class="o">&lt;/</span><span class="n">currentMemory</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">vcpu</span> <span class="n">placement</span><span class="o">=</span><span class="s1">&#39;static&#39;</span><span class="o">&gt;</span><span class="n">vcpus</span><span class="o">/</span><span class="n">vcpu</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">uuid</span><span class="o">&gt;</span><span class="n">container_uuid</span><span class="o">&lt;/</span><span class="n">uuid</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">os</span><span class="o">&gt;</span>
+		<span class="o">&lt;</span><span class="nb">type</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;x86_64&#39;</span> <span class="n">machine</span><span class="o">=</span><span class="s1">&#39;pc&#39;</span><span class="o">&gt;</span><span class="n">hvm</span><span class="o">&lt;/</span><span class="nb">type</span><span class="o">&gt;</span>
+		<span class="o">&lt;</span><span class="n">boot</span> <span class="n">dev</span><span class="o">=</span><span class="s1">&#39;hd&#39;</span><span class="o">/&gt;</span>
+		<span class="o">&lt;</span><span class="n">boot</span> <span class="n">dev</span><span class="o">=</span><span class="s1">&#39;cdrom&#39;</span><span class="o">/&gt;</span>
+	<span class="o">&lt;/</span><span class="n">os</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">features</span><span class="o">&gt;</span>
+		<span class="o">&lt;</span><span class="n">acpi</span><span class="o">/&gt;</span>
+		<span class="o">&lt;</span><span class="n">apic</span><span class="o">/&gt;</span>
+		<span class="o">&lt;</span><span class="n">vmport</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;off&#39;</span><span class="o">/&gt;</span>
+	<span class="o">&lt;/</span><span class="n">features</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">clock</span> <span class="n">offset</span><span class="o">=</span><span class="s1">&#39;utc&#39;</span><span class="o">&gt;</span>
+		<span class="o">&lt;</span><span class="n">timer</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;rtc&#39;</span> <span class="n">tickpolicy</span><span class="o">=</span><span class="s1">&#39;catchup&#39;</span><span class="o">/&gt;</span>
+		<span class="o">&lt;</span><span class="n">timer</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;pit&#39;</span> <span class="n">tickpolicy</span><span class="o">=</span><span class="s1">&#39;delay&#39;</span><span class="o">/&gt;</span>
+		<span class="o">&lt;</span><span class="n">timer</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;hpet&#39;</span> <span class="n">present</span><span class="o">=</span><span class="s1">&#39;no&#39;</span><span class="o">/&gt;</span>
+	<span class="o">&lt;/</span><span class="n">clock</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">pm</span><span class="o">&gt;</span>
+		<span class="o">&lt;</span><span class="n">suspend</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">mem</span> <span class="n">enabled</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span><span class="o">/&gt;</span>
+		<span class="o">&lt;</span><span class="n">suspend</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">disk</span> <span class="n">enabled</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span><span class="o">/&gt;</span>
+	<span class="o">&lt;/</span><span class="n">pm</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">devices</span><span class="o">&gt;</span>
+		<span class="o">&lt;</span><span class="n">disk</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cdrom&#39;</span><span class="o">&gt;</span>
+			<span class="o">&lt;</span><span class="n">driver</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;qemu&#39;</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="o">/&gt;</span>
+			<span class="o">&lt;</span><span class="n">source</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;iso_path&#39;</span><span class="o">/&gt;</span>
+			<span class="o">&lt;</span><span class="n">target</span> <span class="n">dev</span><span class="o">=</span><span class="s1">&#39;hda&#39;</span> <span class="n">bus</span><span class="o">=</span><span class="s1">&#39;ide&#39;</span><span class="o">/&gt;</span>
+			<span class="o">&lt;</span><span class="n">address</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;drive&#39;</span> <span class="n">controller</span><span class="o">=</span><span class="s1">&#39;0&#39;</span> <span class="n">bus</span><span class="o">=</span><span class="s1">&#39;0&#39;</span> <span class="n">target</span><span class="o">=</span><span class="s1">&#39;0&#39;</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="o">/&gt;</span>
+		<span class="o">&lt;/</span><span class="n">disk</span><span class="o">&gt;</span>
+		<span class="o">&lt;</span><span class="n">interface</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bridge&#39;</span><span class="o">&gt;</span>
+	        <span class="o">&lt;</span><span class="n">start</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;onboot&#39;</span><span class="o">/&gt;</span>
+	        <span class="o">&lt;</span><span class="n">source</span> <span class="n">bridge</span><span class="o">=</span><span class="s1">&#39;nat_interface_name&#39;</span><span class="o">/&gt;</span> 
+	        <span class="o">&lt;</span><span class="n">model</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;virtio&#39;</span><span class="o">/&gt;</span>
+	    <span class="o">&lt;/</span><span class="n">interface</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">interface</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bridge&#39;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">start</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;onboot&#39;</span><span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="n">source</span> <span class="n">bridge</span><span class="o">=</span><span class="s1">&#39;bridge_interface_name&#39;</span><span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="n">model</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;virtio&#39;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;/</span><span class="n">interface</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">memballoon</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;virtio&#39;</span><span class="o">&gt;</span>
+			<span class="o">&lt;</span><span class="n">address</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;pci&#39;</span> <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;0x0000&#39;</span> <span class="n">bus</span><span class="o">=</span><span class="s1">&#39;0x00&#39;</span> <span class="n">slot</span><span class="o">=</span><span class="s1">&#39;0x07&#39;</span> <span class="n">function</span><span class="o">=</span><span class="s1">&#39;0x0&#39;</span><span class="o">/&gt;</span>
+		<span class="o">&lt;/</span><span class="n">memballoon</span><span class="o">&gt;</span>
+	<span class="o">&lt;/</span><span class="n">devices</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">domain</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">container_uuid</span></code> : The container UUID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory</span></code> : The container domain memory amount</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vcpus</span></code> : The container domain virtual CPUs amount</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iso_path</span></code> : The ISO file path that will be used by the container domain</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nat_interface_name</span></code> : The NAT interface name that will be used by the container domain</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bridge_interface_name</span></code> : The bridge interface name that will be used by the container domain</p></li>
+</ul>
+</section>
+<section id="container-os">
+<h2>Container OS<a class="headerlink" href="#container-os" title="Permalink to this heading">¶</a></h2>
+<p>In order to provice a valid service, containers domains needs to run with a specific ISO image.</p>
+<p>The operating system running on containers is a custom live Debian to ensure as little data remanence as possible on the virtual domain : All basic tools like text editors, network interactions, development environment are already pre-installed to bring comfortable usage for the client.</p>
+<p>See the <a class="reference external" href="https://github.com/the-anweddol-project/Anweddol-ISO-factory">ISO factory repository</a> to get the script that creates these ISO images.
+You can retrieve a copy of this container ISO on the <a class="reference external" href="https://mega.nz/folder/BTFyVCLB#DNC2K8Lmhgbk6QWrVpeznw">official mirror</a>.</p>
+<p>This mirror URL contains this file tree :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
+├── anweddol_container.iso
+├── md5sum.txt
+├── sha256sum.txt
+└── version.txt
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">anweddol_container.iso</span></code> is the actual container ISO image.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">md5sum.txt</span></code> contains the MD5 checksum of <code class="docutils literal notranslate"><span class="pre">anweddol_container.iso</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sha256sum.txt</span></code> contains the SHA256 checksum of <code class="docutils literal notranslate"><span class="pre">anweddol_container.iso</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">version.txt</span></code> is the version of the ISO. It contains an integer  which is incremented by 1 each updates.</p></li>
+</ul>
+</section>
+<section id="management">
+<h2>Management<a class="headerlink" href="#management" title="Permalink to this heading">¶</a></h2>
+<p>During a server runtime, running container coordinates created for clients are stored in memory to manage them.</p>
+<p>If a container is shut down, a routine will detect that its domain is not active, and will delete the container’s presence in memory and database to prevent ghosted credentials.</p>
+<p>Containers are identified with an UUID4 format string, and their <a class="reference external" href="https://libvirt.gitlab.io/libvirt-appdev-guide-python/libvirt_application_development_guide_using_python-Guest_Domains-Information-UUID.html">libvirt domains UUID</a> are the same one.</p>
+</section>
+<section id="administration">
+<h2>Administration<a class="headerlink" href="#administration" title="Permalink to this heading">¶</a></h2>
+<p>When a container is started, the server first waits for the network to be available inside.
+Then, the server generates new user coordinates and a new listen port that the container will use for client service.</p>
+<p>On every container a specific user is defined called <strong>endpoint</strong>.</p>
+<p>This is a user dedicated to container administration that the server will interact via SSH to administrate it (it is actually calling a bash script inside that you can retrieve on the ISO factory <a class="reference external" href="https://github.com/the-anweddol-project/Anweddol-ISO-factory">github repository</a>). Its default password is <code class="docutils literal notranslate"><span class="pre">endpoint</span></code>, and the container default SSH server is listening on the conventional port (80).</p>
+<p>The bash script executes 3 tasks :</p>
+<ul class="simple">
+<li><p>Create the new specified user that the client will use ;</p></li>
+<li><p>Set up the new SSH listen port ;</p></li>
+<li><p>Disabling the endpoint user once its task is executed ;</p></li>
+</ul>
+<p>The username is in the format <code class="docutils literal notranslate"><span class="pre">user_NUM</span></code>, where NUM is a random number between 10000 and 90000.
+The user password is a 120 character string.
+The new listen port is a random port between 10000 and 15000, whose bindability is checked before assignation.</p>
+<p>When the script will be called, the container will only accept SSH connections with the newly created user, since the endpoint user will be disabled in the process.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">The Anweddol server</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration_guide/index.html">Administration guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developer_section/index.html">Developer section</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Technical specifications</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#core-features">Core features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tools-features">Tools features</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contribute.html">Contribute</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Technical specifications</a><ul>
+      <li>Previous: <a href="networking.html" title="previous chapter">Networking</a></li>
+      <li>Next: <a href="../tools/access_token.html" title="next chapter">Access token</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, The Anweddol project.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../../_sources/technical_specifications/core/virtualization.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

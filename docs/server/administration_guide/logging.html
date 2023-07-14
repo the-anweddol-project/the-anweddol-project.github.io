@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Logging &#8212; The Anweddol server beta-1.2.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../_static/icon2.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
+    <link rel="prev" title="Container ISO" href="container_iso.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="logging">
+<h1>Logging<a class="headerlink" href="#logging" title="Permalink to this heading">¶</a></h1>
+<hr class="docutils" />
+<p>The Anweddol server CLI uses the <code class="docutils literal notranslate"><span class="pre">logging</span></code> python module to ensure viable logging feature.</p>
+<p>Logs are stored in <code class="docutils literal notranslate"><span class="pre">/var/log/anweddol/runtime.txt</span></code> and are stored in this format :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="p">(</span><span class="n">asctime</span><span class="p">)</span><span class="n">s</span> <span class="o">%</span><span class="p">(</span><span class="n">levelname</span><span class="p">)</span><span class="n">s</span> <span class="p">:</span> <span class="o">%</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="n">s</span>
+</pre></div>
+</div>
+<p>Here is a sample of logs generated during the development phase of the Anweddol server :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>2023-06-27 17:59:25,126 WARNING : [INIT] Initializing server (running as &#39;anweddol&#39;) ...
+2023-06-27 17:59:25,126 INFO : [INIT] Loading instance RSA key pair ...
+2023-06-27 17:59:25,700 INFO : [INIT] Initializing server interface ...
+2023-06-27 17:59:25,711 INFO : [INIT] Binding handlers routine ...
+2023-06-27 17:59:25,711 INFO : [INIT] All done. Server is ready
+2023-06-27 17:59:25,711 INFO : Starting server ...
+2023-06-27 17:59:25,712 INFO : Server is started
+2023-06-27 17:59:42,724 INFO : (client ID 12ca17b) New client connected
+2023-06-27 17:59:42,770 INFO : (client ID 12ca17b) Received STAT request
+2023-06-27 17:59:42,778 INFO : (client ID 12ca17b) Connection closed
+2023-06-27 17:59:49,958 INFO : (client ID 12ca17b) New client connected
+2023-06-27 17:59:50,003 INFO : (client ID 12ca17b) Received CREATE request
+2023-06-27 17:59:50,003 INFO : (client ID 12ca17b) Container 5d730281-414d-4bd8-ae01-13ebf302fd17 was created
+2023-06-27 18:00:03,421 INFO : (client ID 12ca17b) Container 5d730281-414d-4bd8-ae01-13ebf302fd17 domain is started
+2023-06-27 18:00:03,443 INFO : Connected (version 2.0, client OpenSSH_8.4p1)
+2023-06-27 18:00:03,567 INFO : Authentication (password) successful!
+2023-06-27 18:00:03,567 INFO : (client ID 12ca17b) Endpoint shell opened
+2023-06-27 18:00:05,458 INFO : (client ID 12ca17b) Connection closed
+2023-06-27 18:00:19,881 INFO : (client ID 12ca17b) New client connected
+2023-06-27 18:00:19,927 INFO : (client ID 12ca17b) Received DESTROY request
+2023-06-27 18:00:20,143 INFO : (client ID 12ca17b) Container 5d730281-414d-4bd8-ae01-13ebf302fd17 was destroyed
+2023-06-27 18:00:20,145 INFO : (client ID 12ca17b) Connection closed
+</pre></div>
+</div>
+<p><strong>NOTE</strong> : Clients are represented by their IDs, here “12ca17b” : It is a way of programmatically identifying the client other than with his IP. It is the first 7 characters of the client’s IP SHA256.</p>
+<section id="log-rotation">
+<h2>Log rotation<a class="headerlink" href="#log-rotation" title="Permalink to this heading">¶</a></h2>
+<p>You have the possibility to rotate logs by archiving or deleting them.</p>
+<p>Archived logs will be stored in a separate folder withing zipped files with the name format :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">archived_</span><span class="o">&lt;</span><span class="n">DATE</span><span class="o">&gt;.</span><span class="n">zip</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">DATE</span></code> is the rotation date. See the <code class="docutils literal notranslate"><span class="pre">log_rotation</span></code> section in the <a class="reference internal" href="configuration_file.html"><span class="std std-doc">configuration file</span></a> for more.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">The Anweddol server</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administration guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="server_usage.html">Server usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_token.html">Access token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_file.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container_iso.html">Container ISO</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Logging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#log-rotation">Log rotation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer_section/index.html">Developer section</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../technical_specifications/index.html">Technical specifications</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Administration guide</a><ul>
+      <li>Previous: <a href="container_iso.html" title="previous chapter">Container ISO</a></li>
+      <li>Next: <a href="troubleshooting.html" title="next chapter">Troubleshooting</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, The Anweddol project.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/administration_guide/logging.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

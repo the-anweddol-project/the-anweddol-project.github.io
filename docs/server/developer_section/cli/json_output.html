@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CLI JSON output &#8212; The Anweddol server beta-1.2.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../../_static/icon2.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Troubleshooting" href="../troubleshooting.html" />
+    <link rel="prev" title="Access token" href="../api_references/tools/accesstk.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cli-json-output">
+<h1>CLI JSON output<a class="headerlink" href="#cli-json-output" title="Permalink to this heading">¶</a></h1>
+<hr class="docutils" />
+<p>In order to communicate with other programs in an easy way, the Anweddol server CLI provides a JSON output feature that allows [inter-program communication](https://clig.dev/#simple-parts-that-work-together.</p>
+<section id="global-structure">
+<h2>Global structure<a class="headerlink" href="#global-structure" title="Permalink to this heading">¶</a></h2>
+<p>Each commands with the <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter results on a single JSON structure printed on <code class="docutils literal notranslate"><span class="pre">stdout</span></code> :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">STATUS</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">MESSAGE</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">DATA</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">STATUS</span></code> : The result status, it can be <code class="docutils literal notranslate"><span class="pre">&quot;OK&quot;</span></code> if there was no errors during the process, <code class="docutils literal notranslate"><span class="pre">&quot;ERROR&quot;</span></code> otherwise.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MESSAGE</span></code> : The message according to the command purpose.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DATA</span></code> : A dictionary containing every exploitable informations that a command can generate.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">DATA</span></code> dictionary content changes according to the command context (see below).</p>
+<p><strong>NOTE</strong> : Configuration file related errors arent produced in a JSON format.</p>
+</section>
+<section id="specific-result-json-structures">
+<h2>Specific result JSON structures<a class="headerlink" href="#specific-result-json-structures" title="Permalink to this heading">¶</a></h2>
+<section id="errors">
+<h3>Errors<a class="headerlink" href="#errors" title="Permalink to this heading">¶</a></h3>
+<p>When an error is raised during the process with any <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter set with subcommands, the output JSON will be :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;An error occured&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+		<span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="n">ERROR</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ERROR</span></code> : The error message that occured</p></li>
+</ul>
+</section>
+<section id="start-sub-command">
+<h3><code class="docutils literal notranslate"><span class="pre">start</span></code> sub-command<a class="headerlink" href="#start-sub-command" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">anwdlserver</span> <span class="pre">start</span></code> with the <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter will result in :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Server is started&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>NOTE</strong> : If the option <code class="docutils literal notranslate"><span class="pre">-d</span></code> is set, no output will be displayed.</p>
+<p>If the option <code class="docutils literal notranslate"><span class="pre">-c</span></code> is set :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Check done&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+		<span class="s2">&quot;errors_recorded&quot;</span><span class="p">:</span> <span class="n">ERRORS_RECORDED</span><span class="p">,</span> 
+		<span class="s2">&quot;errors_list&quot;</span><span class="p">:</span> <span class="n">ERRORS_LIST</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If an error occured during server environment verification, the JSON structure looks like this :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Errors detected on server environment&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+		<span class="s2">&quot;errors_recorded&quot;</span><span class="p">:</span> <span class="n">ERRORS_RECORDED</span><span class="p">,</span> 
+		<span class="s2">&quot;errors_list&quot;</span><span class="p">:</span> <span class="n">ERRORS_LIST</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ERRORS_RECORDED</span></code> : The amount of errors recorded</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ERRORS_LIST</span></code> : The errors messages list</p></li>
+</ul>
+</section>
+<section id="stop-sub-command">
+<h3><code class="docutils literal notranslate"><span class="pre">stop</span></code> sub-command<a class="headerlink" href="#stop-sub-command" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">anwdlserver</span> <span class="pre">stop</span></code> with the <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter will result in :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Server is stopped&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="restart-sub-command">
+<h3><code class="docutils literal notranslate"><span class="pre">restart</span></code> sub-command<a class="headerlink" href="#restart-sub-command" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">anwdlserver</span> <span class="pre">restart</span></code> with the <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter will result in :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Server is started&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="dl-iso-sub-command">
+<h3><code class="docutils literal notranslate"><span class="pre">dl-iso</span></code> sub-command<a class="headerlink" href="#dl-iso-sub-command" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">anwdlserver</span> <span class="pre">dl-iso</span></code> with the <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter will result in :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;ISO image was successfully downloaded&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+		<span class="s2">&quot;checksums&quot;</span><span class="p">:</span> <span class="n">CHECKSUMS</span><span class="p">,</span>
+		<span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">VERSION</span><span class="p">,</span>
+		<span class="s2">&quot;file_path&quot;</span><span class="p">:</span> <span class="n">FILE_PATH</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CHECKSUMS</span></code> : The downloaded ISO MD5 and SHA256 checksums, in a list</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VERSION</span></code> : The downloaded <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/tools/iso_management.html#official-mirror">ISO version</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FILE_PATH</span></code> : The downloaded ISO file path</p></li>
+</ul>
+<p>if the option <code class="docutils literal notranslate"><span class="pre">-m</span></code> is set :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Remote ISO metadata&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+		<span class="s2">&quot;checksums&quot;</span><span class="p">:</span> <span class="n">CHECKSUMS</span><span class="p">,</span>
+		<span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">VERSION</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CHECKSUMS</span></code> : The downloaded ISO MD5 and SHA256 checksums, in a list</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VERSION</span></code> : The downloaded <a class="reference external" href="https://anweddol-server.readthedocs.io/en/latest/technical_specifications/tools/iso_management.html#official-mirror">ISO version</a></p></li>
+</ul>
+</section>
+<section id="access-tk-sub-command">
+<h3><code class="docutils literal notranslate"><span class="pre">access-tk</span></code> sub-command<a class="headerlink" href="#access-tk-sub-command" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">anwdlserver</span> <span class="pre">access-tk</span> <span class="pre">-a</span></code> with the <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter will result in :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;New access token created&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+		<span class="s2">&quot;entry_id&quot;</span><span class="p">:</span> <span class="n">ENTRY_ID</span><span class="p">,</span>
+		<span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ENTRY_ID</span></code> : The created entry ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ACCESS_TOKEN</span></code> : The new access token, in plain text</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">anwdlserver</span> <span class="pre">access-tk</span> <span class="pre">-l</span></code> with the <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter will result in :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Recorded entries ID&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+		<span class="s2">&quot;entry_list&quot;</span><span class="p">:</span> <span class="n">ENTRY_LIST</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ENTRY_LIST</span></code> : The recorded entries list</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">anwdlserver</span> <span class="pre">access-tk</span> <span class="pre">-r</span></code> with the <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter will result in :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Entry ID was deleted&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">anwdlserver</span> <span class="pre">access-tk</span> <span class="pre">-e</span></code> with the <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter will result in :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Entry ID was enabled&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">anwdlserver</span> <span class="pre">access-tk</span> <span class="pre">-d</span></code> with the <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter will result in :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Entry ID was disabled&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="regen-rsa-sub-command">
+<h3><code class="docutils literal notranslate"><span class="pre">regen-rsa</span></code> sub-command<a class="headerlink" href="#regen-rsa-sub-command" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">anwdlserver</span> <span class="pre">regen-rsa</span></code> with the <code class="docutils literal notranslate"><span class="pre">--json</span></code> parameter will result in :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+	<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;RSA keys re-generated&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+		<span class="s2">&quot;fingerprint&quot;</span><span class="p">:</span> <span class="n">FINGERPRINT</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">FINGERPRINT</span></code> : The new generated public key’s SHA256 digest</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">The Anweddol server</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration_guide/index.html">Administration guide</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer section</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#important-note">Important note</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#api-references">API references</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#cli-references">CLI references</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">CLI JSON output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../technical_specifications/index.html">Technical specifications</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contribute.html">Contribute</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Developer section</a><ul>
+      <li>Previous: <a href="../api_references/tools/accesstk.html" title="previous chapter">Access token</a></li>
+      <li>Next: <a href="../troubleshooting.html" title="next chapter">Troubleshooting</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, The Anweddol project.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../../_sources/developer_section/cli/json_output.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

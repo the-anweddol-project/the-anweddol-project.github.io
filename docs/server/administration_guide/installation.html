@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Installation &#8212; The Anweddol server beta-1.2.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../_static/icon2.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Server usage" href="server_usage.html" />
+    <link rel="prev" title="Administration guide" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
+<hr class="docutils" />
+<p>This section covers the prerequisites needed for the system before the Anweddol server installation.</p>
+<section id="anweddol-server-installation">
+<h2>Anweddol server installation<a class="headerlink" href="#anweddol-server-installation" title="Permalink to this heading">¶</a></h2>
+<p>Install the Anweddol server by the sources :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/the-anweddol-project/Anweddol-server.git
+$ cd Anweddol-server
+$ sudo pip install .
+</pre></div>
+</div>
+<p>The nessessary files and users will be created during the installation.</p>
+<p><strong>NOTE</strong> : If the pip installation is launched with non-root permissions, only the <code class="docutils literal notranslate"><span class="pre">anwdlserver</span></code> package will be installed : the full setup will be skipped.</p>
+</section>
+<section id="environment-setup">
+<h2>Environment setup<a class="headerlink" href="#environment-setup" title="Permalink to this heading">¶</a></h2>
+<section id="libvirt">
+<h3>Libvirt<a class="headerlink" href="#libvirt" title="Permalink to this heading">¶</a></h3>
+<p><a class="reference external" href="https://libvirt.org/">Libvirt</a> is a toolkit to manage virtualization platforms that the server is using to manage container domains.</p>
+<section id="id1">
+<h4>Installation<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h4>
+<p>Libvirt must be installed via your package manager :</p>
+<p>Apt :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update
+$ sudo apt-get install python-libvirt
+</pre></div>
+</div>
+<p>DNF :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo dnf install python-libvirt
+</pre></div>
+</div>
+<p>Yum :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo yum install python-libvirt
+</pre></div>
+</div>
+<p><strong>NOTE</strong> : You can also install it from pip by executing :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install libvirt-python
+</pre></div>
+</div>
+<p>But you need to install build dependencies manually, and this topic is not covered in this documentation.</p>
+</section>
+<section id="setup">
+<h4>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">¶</a></h4>
+<p>You need to modify the <code class="docutils literal notranslate"><span class="pre">/etc/libvirt/qemu.conf</span></code> file to give libvirt appropriate rights.</p>
+<p>Edit the <code class="docutils literal notranslate"><span class="pre">/etc/libvirt/qemu.conf</span></code> file :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo nano /etc/libvirt/qemu.conf
+</pre></div>
+</div>
+<p>Find the <code class="docutils literal notranslate"><span class="pre">user</span></code> and <code class="docutils literal notranslate"><span class="pre">group</span></code> directives. By default, both are set to <code class="docutils literal notranslate"><span class="pre">root</span></code> :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">...</span><span class="p">]</span> 
+<span class="n">Some</span> <span class="n">examples</span> <span class="n">of</span> <span class="n">valid</span> <span class="n">values</span> <span class="n">are</span><span class="p">:</span>
+<span class="c1">#</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;qemu&quot;</span>   <span class="c1"># A user named &quot;qemu&quot;</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;+0&quot;</span>     <span class="c1"># Super user (uid=0)</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;100&quot;</span>    <span class="c1"># A user named &quot;100&quot; or a user with uid=100</span>
+<span class="c1">#</span>
+<span class="c1">#user = &quot;root&quot;</span>
+<span class="n">The</span> <span class="n">group</span> <span class="k">for</span> <span class="n">QEMU</span> <span class="n">processes</span> <span class="n">run</span> <span class="n">by</span> <span class="n">the</span> <span class="n">system</span> <span class="n">instance</span><span class="o">.</span> <span class="n">It</span> <span class="n">can</span> <span class="n">be</span>
+<span class="n">specified</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">similar</span> <span class="n">way</span> <span class="n">to</span> <span class="n">user</span><span class="o">.</span>
+<span class="c1">#group = &quot;root&quot;</span>
+<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Uncomment both lines and replace <code class="docutils literal notranslate"><span class="pre">root</span></code> with <code class="docutils literal notranslate"><span class="pre">anweddol</span></code> and the group with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code> as shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">...</span><span class="p">]</span> 
+<span class="n">Some</span> <span class="n">examples</span> <span class="n">of</span> <span class="n">valid</span> <span class="n">values</span> <span class="n">are</span><span class="p">:</span>
+<span class="c1">#</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;qemu&quot;</span>   <span class="c1"># A user named &quot;qemu&quot;</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;+0&quot;</span>     <span class="c1"># Super user (uid=0)</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;100&quot;</span>    <span class="c1"># A user named &quot;100&quot; or a user with uid=100</span>
+<span class="c1">#</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;anweddol&quot;</span>
+<span class="n">The</span> <span class="n">group</span> <span class="k">for</span> <span class="n">QEMU</span> <span class="n">processes</span> <span class="n">run</span> <span class="n">by</span> <span class="n">the</span> <span class="n">system</span> <span class="n">instance</span><span class="o">.</span> <span class="n">It</span> <span class="n">can</span> <span class="n">be</span>
+<span class="n">specified</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">similar</span> <span class="n">way</span> <span class="n">to</span> <span class="n">user</span><span class="o">.</span>
+<span class="n">group</span> <span class="o">=</span> <span class="s2">&quot;libvirt&quot;</span>
+<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Then restart the libvirtd daemon :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl restart libvirtd.service
+</pre></div>
+</div>
+<p>(source : <a class="reference external" href="https://ostechnix.com/solved-cannot-access-storage-file-permission-denied-error-in-kvm-libvirt/">ostechnix</a>)</p>
+</section>
+</section>
+<section id="networking">
+<h3>Networking<a class="headerlink" href="#networking" title="Permalink to this heading">¶</a></h3>
+<p>For the containers to be able to communicate with the outside, the host system must have a bridge interface linking the main network interface to the container domain’s interface.</p>
+<p>It consists of a bridge interface with the main network interface set as a slave to the bridge :
+the container domain’s interface will connect to it on the runtime via TAP link.</p>
+<blockquote>
+<div><p>If the server is using a WI-FI interface as the main network interface, a more specific setup must be done before continuing (see the <a class="reference external" href="https://wiki.debian.org/BridgeNetworkConnections#Bridging_with_a_wireless_NIC">debian documentation</a> for more).</p>
+</div></blockquote>
+<p>Follow the steps below according to your system :</p>
+<section id="debian-based-systems">
+<h4>Debian-based systems<a class="headerlink" href="#debian-based-systems" title="Permalink to this heading">¶</a></h4>
+<p>First, you need to stop the networking service :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ service network stop
+</pre></div>
+</div>
+<p>Then you can create the <code class="docutils literal notranslate"><span class="pre">anwdlbr0</span></code> bridge interface, replacing <code class="docutils literal notranslate"><span class="pre">MASTER_INTERFACE_NAME</span></code> by your actual master interface name :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ brctl addbr anwdlbr0
+$ brctl addif anwdlbr0 MASTER_INTERFACE_NAME
+</pre></div>
+</div>
+<p>Create persistent configuration files for your interfaces :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ printf &quot;iface MASTER_INTERFACE_NAME inet manual&quot; &gt;&gt; /etc/network/interfaces
+$ printf &quot;iface anwdlbr0 inet dhcp\n\tbridge_ports MASTER_INTERFACE_NAME&quot; &gt;&gt; /etc/network/interfaces
+</pre></div>
+</div>
+<p>Enable the <code class="docutils literal notranslate"><span class="pre">anwdlbr0</span></code> interface, and restart the networking service :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ifup anwdlbr0
+$ service network start
+</pre></div>
+</div>
+</section>
+<section id="redhat-based-systems">
+<h4>Redhat-based systems<a class="headerlink" href="#redhat-based-systems" title="Permalink to this heading">¶</a></h4>
+<p>Disable NetworkManager :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo chkconfig NetworkManager off
+$ sudo chkconfig network on
+$ sudo service NetworkManager stop
+$ sudo service network start
+</pre></div>
+</div>
+<p>Define the main network interface in networks-script, replacing <code class="docutils literal notranslate"><span class="pre">MASTER_INTERFACE_NAME</span></code> by your actual master interface name  :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo printf &quot;DEVICE=MASTER_INTERFACE_NAME\nHWADDR=$(ifconfig MASTER_INTERFACE_NAME | grep -o -E ..:..:..:..:..:..)\nONBOOT=yes\nBRIDGE=anwdlbr0\nNM_CONTROLLED=no&quot; /etc/sysconfig/networks-script/MASTER_INTERFACE_NAME
+</pre></div>
+</div>
+<p>Create the <code class="docutils literal notranslate"><span class="pre">anwdlbr0</span></code> bridge interface in networks-script :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo printf &quot;DEVICE=anwdlbr0\nTYPE=Bridge\nBOOTPROTO=dhcp\nONBOOT=yes\nDELAY=0\nNM_CONTROLLED=no&quot; /etc/sysconfig/networks-script/ifcfg-anwdlbr0
+</pre></div>
+</div>
+<p>Add sysctl rules to enable packet forwarding :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo printf &quot;net.bridge.bridge-nf-call-ip6tables = 0\nnet.bridge.bridge-nf-call-iptables = 0\nnet.bridge.bridge-nf-call-arptables = 0&quot; &gt;&gt; /etc/sysctl.conf
+$ sudo sysctl -p /etc/sysctl.conf
+</pre></div>
+</div>
+<p>Add iptables rules to accept packet forwarding from bridged interfaces :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo printf &quot;-I FORWARD -m physdev --physdev-is-bridged -j ACCEPT&quot; /etc/sysconfig/anweddol-iptables-forward-rules
+$ sudo lokkit --custom-rules=ipv4:filter:/etc/sysconfig/anweddol-iptables-forward-rules
+</pre></div>
+</div>
+<p>Restart the network service :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo service network restart
+</pre></div>
+</div>
+</section>
+</section>
+<section id="container-iso">
+<h3>Container ISO<a class="headerlink" href="#container-iso" title="Permalink to this heading">¶</a></h3>
+<p>Before using the server, you need to download a specific ISO image for the container domains in order to provide a functional service.</p>
+<p>See the <a class="reference internal" href="container_iso.html"><span class="std std-doc">Container ISO</span></a> section to learn more.</p>
+</section>
+</section>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h2>
+<p>At this point, you should be able to start the server. See the <a class="reference internal" href="server_usage.html"><span class="std std-doc">Server usage section</span></a> to do so.</p>
+</section>
+<section id="anweddol-server-uninstallation">
+<h2>Anweddol server uninstallation<a class="headerlink" href="#anweddol-server-uninstallation" title="Permalink to this heading">¶</a></h2>
+<p>To uninstall the Anweddol server, execute :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo anwdlserver-uninstall
+</pre></div>
+</div>
+<p>The script will delete any files and everything associated with the Anweddol server.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">The Anweddol server</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administration guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#anweddol-server-installation">Anweddol server installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environment-setup">Environment setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-started">Getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#anweddol-server-uninstallation">Anweddol server uninstallation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="server_usage.html">Server usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_token.html">Access token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_file.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container_iso.html">Container ISO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer_section/index.html">Developer section</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../technical_specifications/index.html">Technical specifications</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Administration guide</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Administration guide</a></li>
+      <li>Next: <a href="server_usage.html" title="next chapter">Server usage</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, The Anweddol project.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/administration_guide/installation.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
