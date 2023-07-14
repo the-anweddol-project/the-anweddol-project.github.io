@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Sanitization &#8212; The Anweddol client beta-1.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../../../_static/icon2.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Utilities" href="utilities.html" />
+    <link rel="prev" title="Cryptography" href="cryptography.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="sanitization">
+<h1>Sanitization<a class="headerlink" href="#sanitization" title="Permalink to this heading">¶</a></h1>
+<hr class="docutils" />
+<blockquote>
+<div><p>Normalized request / response values and formats</p>
+</div></blockquote>
+<blockquote>
+<div><p>Package <code class="docutils literal notranslate"><span class="pre">anwdlclient.core.sanitize</span></code></p>
+</div></blockquote>
+<section id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this heading">¶</a></h2>
+<p>None</p>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">verifyResponseContent</span><span class="p">(</span><span class="n">response_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Check if a response dictionary is a valid normalized <a class="reference external" href="https://anweddol-client.readthedocs.io/en/latest/technical_specifications/core/communication.html#response-format">Response format</a></p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">response_dict</span></code> : The response dictionary</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>A tuple representing the verification results :</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+	<span class="kc">True</span><span class="p">,</span> 
+	<span class="n">sanitized_response_dictionary</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>if the <code class="docutils literal notranslate"><span class="pre">response_dict</span></code> is a valid normalized <a class="reference external" href="https://anweddol-client.readthedocs.io/en/latest/technical_specifications/core/communication.html#response-format">Response format</a>,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+	<span class="kc">False</span><span class="p">,</span> 
+	<span class="n">errors_dictionary</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>otherwise.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sanitized_response_dictionary</span></code> : The sanitized response as a normalized <a class="reference external" href="https://anweddol-client.readthedocs.io/en/latest/technical_specifications/core/communication.html#response-format">Response format</a> dictionary.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">errors_dictionary</span></code> : A dictionary depicting the errors detected in <code class="docutils literal notranslate"><span class="pre">response_dict</span></code> according to the <a class="reference external" href="https://docs.python-cerberus.org/en/stable/errors.html">Cerberus</a> error format.</p></li>
+</ul>
+<p><strong>NOTE</strong> : The method <code class="docutils literal notranslate"><span class="pre">verifyResponseContent</span></code> does not use strict verification. It only checks if the required keys and values exist and are correct, but it is open to unknown keys or structures for the developer to be able to implement its own mechanisms (See the technical specifications <a class="reference external" href="https://anweddol-client.readthedocs.io/en/latest/technical_specifications/core/communication.html#sanitization">Sanitization section</a> to learn more).</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">makeRequest</span><span class="p">(</span><span class="n">verb</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Make a normalized <a class="reference external" href="https://anweddol-client.readthedocs.io/en/latest/technical_specifications/core/communication.html#request-format">Request format</a> dictionary</p>
+</div></blockquote>
+<p><em>Parameters</em> :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">verb</span></code> : The verb to send</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parameters</span></code> : The parameters to send. The content must be an empty dict or a normalized <a class="reference external" href="https://anweddol-client.readthedocs.io/en/latest/technical_specifications/core/communication.html#request-format">Request format</a>.</p></li>
+</ul>
+<p><em>Return value</em> :</p>
+<ul class="simple">
+<li><p>A tuple representing a valid <a class="reference external" href="https://anweddol-client.readthedocs.io/en/latest/technical_specifications/core/communication.html#request-format">Request format</a> dictionary :</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+	<span class="kc">True</span><span class="p">,</span> 
+	<span class="n">request_dictionary</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>if the operation succeeded,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+	<span class="kc">False</span><span class="p">,</span>
+	<span class="n">errors_dictionary</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>otherwise.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">request_dictionary</span></code> : The request dictionary as a normalized <a class="reference external" href="https://anweddol-client.readthedocs.io/en/latest/technical_specifications/core/communication.html#request-format">Request format</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">errors_dictionary</span></code> : A dictionary depicting the errors detected in parameters according to the <a class="reference external" href="https://docs.python-cerberus.org/en/stable/errors.html">Cerberus</a> error format.</p></li>
+</ul>
+<p><strong>NOTE</strong> : The <code class="docutils literal notranslate"><span class="pre">sendRequest</span></code> method from <code class="docutils literal notranslate"><span class="pre">ClientInterface</span></code> wraps this function in its process. Like <code class="docutils literal notranslate"><span class="pre">verifyResponseContent</span></code>, the method only checks if the required keys and values exist and are correct, but it is open to unknown keys or structures for the developer to be able to implement its own mechanisms.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">The Anweddol client</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage_guide/index.html">Usage guide</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Developer section</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#examples">Examples</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#api-references">API references</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#core-features">Core features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#tools-features">Tools features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#cli-references">CLI references</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../technical_specifications/index.html">Technical specifications</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contribute</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Developer section</a><ul>
+      <li>Previous: <a href="cryptography.html" title="previous chapter">Cryptography</a></li>
+      <li>Next: <a href="utilities.html" title="next chapter">Utilities</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, The Anweddol project.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../../../_sources/developer_section/api_references/core/sanitization.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

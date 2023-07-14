@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Developer section &#8212; The Anweddol client beta-1.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../_static/icon2.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Basic client" href="examples/basic_client.html" />
+    <link rel="prev" title="Troubleshooting" href="../usage_guide/troubleshooting.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="developer-section">
+<h1>Developer section<a class="headerlink" href="#developer-section" title="Permalink to this heading">¶</a></h1>
+<hr class="docutils" />
+<p>Hello and welcome to the Anweddol client developer documentation.</p>
+<p>Here, you’ll find every informations and documentation about the client API features.</p>
+<p>The Anweddol client is made with <a class="reference external" href="https://www.python.org/">python</a>.</p>
+<p><strong>NOTE</strong> : At the root of <code class="docutils literal notranslate"><span class="pre">anwdlclient</span></code>, there is the CLI source code : They are not meant to be used on an external program since it’s the client implementation’s code itself.</p>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
+<p>See basic client stubs that can be used as examples.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/basic_client.html">Basic client</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/custom_verb_usage.html">Use a custom verb</a></li>
+</ul>
+</div>
+</section>
+<section id="api-references">
+<h2>API references<a class="headerlink" href="#api-references" title="Permalink to this heading">¶</a></h2>
+<p>Learn about every features that the <code class="docutils literal notranslate"><span class="pre">core</span></code> can provide.
+You can see the <em>Technical specificatons</em> section to get every informations on how the Anweddol client works.</p>
+<section id="core-features">
+<h3>Core features<a class="headerlink" href="#core-features" title="Permalink to this heading">¶</a></h3>
+<p>The core features, also called <code class="docutils literal notranslate"><span class="pre">core</span></code>, are every needed functionnalities that an Anweddol client must have in order to correctly communicate with servers.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_references/core/client.html">Client</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_references/core/client.html#constants">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/core/client.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_references/core/client.html#clientinterface"><code class="docutils literal notranslate"><span class="pre">ClientInterface</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_references/core/cryptography.html">Cryptography</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_references/core/cryptography.html#constants">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/core/cryptography.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_references/core/cryptography.html#rsawrapper"><code class="docutils literal notranslate"><span class="pre">RSAWrapper</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_references/core/cryptography.html#aeswrapper"><code class="docutils literal notranslate"><span class="pre">AESWrapper</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_references/core/sanitization.html">Sanitization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_references/core/sanitization.html#constants">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/core/sanitization.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_references/core/utilities.html">Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_references/core/utilities.html#constants">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/core/utilities.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="tools-features">
+<h3>Tools features<a class="headerlink" href="#tools-features" title="Permalink to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">tools</span></code> features are additional functionnalities (access token, credentials, …) coming with the Anweddol client package.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_references/tools/accesstk.html">Access token</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_references/tools/accesstk.html#constants">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/tools/accesstk.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_references/tools/accesstk.html#accesstokenmanager"><code class="docutils literal notranslate"><span class="pre">AccessTokenManager</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_references/tools/credentials.html">Credentials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_references/tools/credentials.html#constants">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_references/tools/credentials.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_references/tools/credentials.html#sessioncredentialsmanager"><code class="docutils literal notranslate"><span class="pre">SessionCredentialsManager</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_references/tools/credentials.html#containercredentialsmanager"><code class="docutils literal notranslate"><span class="pre">ContainerCredentialsManager</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+<section id="cli-references">
+<h2>CLI references<a class="headerlink" href="#cli-references" title="Permalink to this heading">¶</a></h2>
+<p>The actual Anweddol client CLI provides a JSON output feature that allows inter-program communication.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cli/json_output.html">CLI JSON output</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli/json_output.html#global-structure">Global structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/json_output.html#specific-result-json-structures">Specific result JSON structures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/json_output.html#catched-exception">Catched exception</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/json_output.html#create-sub-command"><code class="docutils literal notranslate"><span class="pre">create</span></code> sub-command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/json_output.html#destroy-sub-command"><code class="docutils literal notranslate"><span class="pre">destroy</span></code> sub-command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/json_output.html#stat-sub-command"><code class="docutils literal notranslate"><span class="pre">stat</span></code> sub-command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/json_output.html#session-sub-command"><code class="docutils literal notranslate"><span class="pre">session</span></code> sub-command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/json_output.html#container-sub-command"><code class="docutils literal notranslate"><span class="pre">container</span></code> sub-command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/json_output.html#access-tk-sub-command"><code class="docutils literal notranslate"><span class="pre">access-tk</span></code> sub-command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/json_output.html#regen-rsa-sub-command"><code class="docutils literal notranslate"><span class="pre">regen-rsa</span></code> sub-command</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">The Anweddol client</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage_guide/index.html">Usage guide</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Developer section</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_client.html">Basic client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/custom_verb_usage.html">Use a custom verb</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#api-references">API references</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#core-features">Core features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tools-features">Tools features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cli-references">CLI references</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/json_output.html">CLI JSON output</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../technical_specifications/index.html">Technical specifications</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../usage_guide/troubleshooting.html" title="previous chapter">Troubleshooting</a></li>
+      <li>Next: <a href="examples/basic_client.html" title="next chapter">Basic client</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, The Anweddol project.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/developer_section/index.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
