@@ -27,6 +27,11 @@ header .logo {
 	width: 270px;
 }
 
+header h1 {
+	width: 130px;
+	line-height: 25px;
+}
+
 header .logo img {
 	width: 90px;
 }
@@ -128,7 +133,9 @@ footer p {
 
 .web-article table tr td img {
 	width: 70px;
-	padding-right: 10px;
+	margin-right: 10px;
+	border: 0.0650rem solid #30363d;
+	border-radius: 5px;
 }
 
 .web-article table tr td div {
@@ -238,8 +245,24 @@ footer p {
 	border-radius: 10px;
 }
 
+.code-note {
+	display: inline-block;
+	padding-right: 10px;
+	margin-right: 10px;
+	border-right: 1px solid #fff;
+	width: 60px;
+}
+
 .active {
 	text-decoration: underline;
+}
+
+.bold-title {
+	font-weight: bold;
+}
+
+.italic-title {
+	font-style: italic;
 }
 
 @media (max-width: 1210px){
@@ -251,6 +274,10 @@ footer p {
 @media (max-width: 1090px){
 	header {
 		flex-direction: column;
+	}
+
+	header .logo {
+		justify-content: center;
 	}
 
 	header .logo, nav {
